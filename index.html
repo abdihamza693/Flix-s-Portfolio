@@ -1,1 +1,291 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flix | Rocket League Content Creator</title>
+    <style>
+        :root {
+            --bg-dark: #040406;
+            --card-dark: #0a0a0f;
+            --accent-red: #ff1e27;
+            --accent-glow: rgba(255, 30, 39, 0.4);
+            --text-white: #ffffff;
+            --text-gray: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Interactive Particle Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Banner Image Section */
+        .banner {
+            width: 100%;
+            height: 340px;
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(to bottom, rgba(4,4,6,0) 50%, var(--bg-dark) 100%), 
+                        url('image_5K-SvA.png') center/cover no-repeat;
+            border-bottom: 2px solid var(--accent-red);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 60px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Profile Area */
+        header {
+            text-align: center;
+            margin-top: -80px;
+            margin-bottom: 45px;
+        }
+
+        .pfp-holder {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 15px auto;
+            border-radius: 50%;
+            border: 4px solid var(--accent-red);
+            overflow: hidden;
+            box-shadow: 0 0 30px var(--accent-red);
+            background-color: #000;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .pfp-holder:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .pfp-holder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px var(--accent-red);
+            background: linear-gradient(to bottom, #fff 40%, var(--accent-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 5px;
+            height: 30px;
+        }
+
+        .cursor {
+            color: var(--accent-red);
+            animation: blink 0.7s infinite;
+            font-weight: bold;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Content Layout */
+        .section-title {
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--accent-red);
+            padding-left: 12px;
+            text-shadow: 0 0 10px rgba(255, 30, 39, 0.3);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        @media (max-width: 650px) {
+            .grid { grid-template-columns: 1fr; }
+            .banner { height: 220px; }
+            header { margin-top: -60px; }
+            h1 { font-size: 2.5rem; }
+        }
+
+        .card {
+            background-color: var(--card-dark);
+            border: 1px solid #161622;
+            padding: 25px;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .card:hover {
+            border-color: var(--accent-red);
+            box-shadow: 0 12px 24px rgba(255, 30, 39, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .action-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tag {
+            background-color: rgba(255, 30, 39, 0.1);
+            color: var(--accent-red);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 30, 39, 0.2);
+        }
+
+        .play-btn {
+            background: var(--accent-red);
+            color: #fff;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .play-btn:hover {
+            background: #cc121a;
+            box-shadow: 0 0 15px var(--accent-red);
+            transform: scale(1.03);
+        }
+
+        /* Video Screen Popup Box */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.92);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            width: 90%;
+            max-width: 420px;
+            aspect-ratio: 9/16;
+            background: #000;
+            border-radius: 14px;
+            border: 2px solid var(--accent-red);
+            position: relative;
+            box-shadow: 0 0 40px var(--accent-red);
+        }
+
+        .modal-content iframe {
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            border: none;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: #fff;
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+    <div class="banner"></div>
+
+    <div class="container">
+        <header>
+            <div class="pfp-holder">
+                <img src="image_rZDdB7.png" alt="Seekr Avatar">
+            </div>
+            <h1>SEEKR</h1>
+            <p class="subtitle"><span id="typing-text"></span><span class="cursor">|</span></p>
+        </header>
+
+        <main>
+            <h2 class="section-title">Latest Highlight Reels</h2>
+            <div class="grid">
+                
+                <div class="card">
+                    <h3>The Plat Redirect 🎯</h3>
+                    <p>When a Platinum player gets clean mechanical aerial positioning on an unreadable ball flight path.</p>
+                    <div class="action-area">
+                        <span class="tag">Shorts</span>
+                        <!-- Replace VIDEO_ID_HERE with your YouTube video letters later! -->
+                        <button class="play-btn" data-video-id="VIDEO_ID_HERE" onclick="openPlayer(this)">Watch Clip</button>
+                    </div>
+       
