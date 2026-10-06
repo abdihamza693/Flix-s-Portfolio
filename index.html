@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flix | Rocket League Content Creator</title>
+    <title>Seekr | Rocket League Content Creator</title>
     <style>
         :root {
             --bg-dark: #040406;
@@ -48,7 +47,7 @@
             position: relative;
             z-index: 2;
             background: linear-gradient(to bottom, rgba(4,4,6,0) 50%, var(--bg-dark) 100%), 
-                        url('image_5K-SvA.png') center/cover no-repeat;
+                        url('a.png') center/cover no-repeat;
             border-bottom: 2px solid var(--accent-red);
             box-shadow: 0 0 30px var(--accent-glow);
         }
@@ -270,7 +269,8 @@
     <div class="container">
         <header>
             <div class="pfp-holder">
-                <img src="image_rZDdB7.png" alt="Seekr Avatar">
+                <!-- Matches your circular image profile filename directly -->
+                <img src="ChatGPT Image Oct 6, 2026, 08_17_12 AM.png" alt="Seekr Avatar">
             </div>
             <h1>SEEKR</h1>
             <p class="subtitle"><span id="typing-text"></span><span class="cursor">|</span></p>
@@ -285,7 +285,133 @@
                     <p>When a Platinum player gets clean mechanical aerial positioning on an unreadable ball flight path.</p>
                     <div class="action-area">
                         <span class="tag">Shorts</span>
-                        <!-- Replace VIDEO_ID_HERE with your YouTube video letters later! -->
                         <button class="play-btn" data-video-id="VIDEO_ID_HERE" onclick="openPlayer(this)">Watch Clip</button>
                     </div>
-       
+                </div>
+
+                <div class="card">
+                    <h3>Humbling Toxic Smurfs 🤫</h3>
+                    <p>Turning around competitive match momentum after the opposition start spamming quickchat alerts.</p>
+                    <div class="action-area">
+                        <span class="tag">Shorts</span>
+                        <button class="play-btn" data-video-id="VIDEO_ID_HERE" onclick="openPlayer(this)">Watch Clip</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <h2 class="section-title">Operational Briefing</h2>
+            <div class="card" style="margin-bottom: 30px;">
+                <p>Welcome to the base operations center. This space keeps tabs on upcoming uploads, vertical formats, and growth pacing metrics centered entirely around Rocket League gameplay strategies.</p>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal" id="videoOverlay" onclick="closePlayer()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closePlayer()">✕ CLOSE PLAYER</button>
+            <iframe id="videoPlayer" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript Text Typwriter effect
+        const words = ["Rocket League Content Hub", "Platinum 2 Mechanics", "YouTube Shorts Grind"];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        
+        function typeEffect() {
+            const targetElement = document.getElementById("typing-text");
+            if(!targetElement) return;
+            const currentWord = words[wordIndex];
+
+            if (isDeleting) {
+                targetElement.textContent = currentWord.substring(0, charIndex - 1);
+Use code with caution.
+charIndex--;
+} else {
+targetElement.textContent = currentWord.substring(0, charIndex + 1);
+charIndex++;
+}
+if (!isDeleting && charIndex === currentWord.length) {
+isDeleting = true;
+setTimeout(typeEffect, 1800);
+} else if (isDeleting && charIndex === 0) {
+isDeleting = false;
+wordIndex = (wordIndex + 1) % words.length;
+setTimeout(typeEffect, 400);
+} else {
+setTimeout(typeEffect, isDeleting ? 40 : 80);
+}
+}
+// Particle background calculations
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+function resizeCanvas() {
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+class Particle {
+constructor() {
+this.x = Math.random() * canvas.width;
+this.y = Math.random() * canvas.height;
+this.size = Math.random() * 2 + 0.5;
+this.speedX = (Math.random() - 0.5) * 0.5;
+this.speedY = -Math.random() * 0.8 - 0.2;
+this.alpha = Math.random() * 0.5 + 0.1;
+}
+update() {
+this.x += this.speedX;
+this.y += this.speedY;
+if (this.y < 0) {
+this.y = canvas.height;
+this.x = Math.random() * canvas.width;
+}
+}
+draw() {
+ctx.save();
+ctx.globalAlpha = this.alpha;
+ctx.shadowBlur = 10;
+ctx.shadowColor = '#ff1e27';
+ctx.fillStyle = '#ff1e27';
+ctx.beginPath();
+ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+ctx.fill();
+ctx.restore();
+}
+}
+function initParticles() {
+particles = [];
+for (let i = 0; i < 45; i++) {
+particles.push(new Particle());
+}
+}
+function animateParticles() {
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+particles.forEach(p => {
+p.update();
+p.draw();
+});
+requestAnimationFrame(animateParticles);
+}
+// Video Player control operations
+const overlay = document.getElementById('videoOverlay');
+const frame = document.getElementById('videoPlayer');
+function openPlayer(element) {
+const vidId = element.getAttribute('data-video-id');
+frame.src = https://youtube.com{vidId}?autoplay=1;
+overlay.classList.add('active');
+}
+function closePlayer() {
+overlay.classList.remove('active');
+frame.src = "";
+}
+document.addEventListener("DOMContentLoaded", () => {
+setTimeout(typeEffect, 800);
+initParticles();
+animateParticles();
+});
